@@ -1,7 +1,7 @@
 nhibernate-studies
 ==================
 
-Old code based on nhibernate summer of code (cleaned up)
+Old code based on Summer Of NHibernate. The old code was a bit dated, so here is the updated version.
 
 ## Intro
 In order to help with self studies of NHibernate I've created this sample project. 
