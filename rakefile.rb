@@ -11,9 +11,10 @@ task :default => [:all]
 
 desc "Rebuild solution"
 build :build do |msb, args|
-    msb.prop :configuration, :Debug
-    msb.target = [:Rebuild]
-    msb.sln = "nhibernate-studies.sln"
+  msb.prop :configuration, :Debug
+  msb.prop :VisualStudioVersion, '12.0' # build fails sometimes because of wrong vs version in env
+  msb.target = [:Rebuild]
+  msb.sln = "nhibernate-studies.sln"
 end
 
 desc "Install missing NuGet packages."
