@@ -11,3 +11,4 @@ AwesomeNHApp.userprefs
 *.sublime-workspace
 packages/
 .db.sqlite
+.vs
