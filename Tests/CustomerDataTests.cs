@@ -26,7 +26,16 @@ namespace SomeBasicNHApp.Tests
             Assert.IsNotNull(customer);
         }
 
-        [Test]
+		[Test]
+		public void CustomerHasOrders()
+		{
+			var customer = _session.Get<Customer>(1);
+
+			Assert.True(customer.Orders.Any());
+		}
+
+
+		[Test]
         public void CanGetCustomerByFirstname()
         {
             var customers = _session.QueryOver<Customer>()

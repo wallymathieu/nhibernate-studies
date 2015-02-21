@@ -8,5 +8,10 @@
 		<property name="Firstname" />
 		<property name="Lastname" />
 		<property name="Version" />
+		<bag name="Orders" >
+			<key column="Customer_id"></key>
+			<one-to-many class="Order" />
+		</bag>
+
 	</class>
 </hibernate-mapping>
