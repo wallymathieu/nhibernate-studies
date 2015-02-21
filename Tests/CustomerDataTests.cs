@@ -34,6 +34,13 @@ namespace SomeBasicNHApp.Tests
 			Assert.True(customer.Orders.Any());
 		}
 
+		[Test]
+		public void ProductsArePartOfOrders()
+		{
+			var product = _session.Get<Product>(1);
+
+			Assert.True(product.Orders.Any());
+		}
 
 		[Test]
         public void CanGetCustomerByFirstname()
