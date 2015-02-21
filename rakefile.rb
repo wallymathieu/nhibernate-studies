@@ -19,19 +19,17 @@ end
 
 desc "Install missing NuGet packages."
 task :install_packages do
-  package_paths = FileList["**/packages.config"]+[".nuget/packages.config"]
-
-  package_paths.each.each do |filepath|
-      NuGet::exec("i #{filepath} -o ./packages -source http://www.nuget.org/api/v2/")
-  end
+    NuGet::exec("restore nhibernate-studies.sln -source http://www.nuget.org/api/v2/")
 end
 
 desc "test using console"
 test_runner :test => [:build] do |runner|
   runner.exe =NuGet::nunit_86_path
   #{}"  /framework=net-4.5 "  
-  files = [File.join(File.dirname(__FILE__),"Tests","bin","Debug","Tests.dll"),
-    File.join(File.dirname(__FILE__),"CoreXml","bin","Debug","CoreXml.dll")]
+  d = File.dirname(__FILE__)
+  files = [File.join(d,"Tests","bin","Debug","Tests.dll"),
+    File.join(d,"CoreXml","bin","Debug","CoreXml.dll"),
+    File.join(d,"ClassMapTests","bin","Debug","ClassMapTests.dll")]
   runner.files = files 
 end
 
@@ -48,7 +46,7 @@ namespace :migrations do
   end
   
   desc "Run migrations"
-  task :run, [:version]=> [:build] do |t,args|
+  task :run, [:version] do |t,args|
     #to migrate back, you can use "rake migrations:run[1]", where 1 is the desired version
     args.with_defaults(:version => nil)
     runcmd = sqlite
@@ -66,7 +64,7 @@ namespace :migrations do
   end
 
   desc "Dry run migrations"
-  task :dryrun => [:build,:path] do |t,args|
+  task :dryrun do |t,args|
     cd File.join("DbMigrations","bin","debug") do
     sh "#{sqlite} --preview" do |ok, res|
       if ! ok

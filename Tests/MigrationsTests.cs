@@ -27,7 +27,7 @@ namespace SomeBasicNHApp.Tests
         {
         }
 
-        class ExecuteAndRedirectOutput
+        public class ExecuteAndRedirectOutput
         {
             private System.Diagnostics.Process _p;
             public ExecuteAndRedirectOutput(string file, string arguments)

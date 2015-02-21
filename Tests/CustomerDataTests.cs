@@ -72,7 +72,9 @@ namespace SomeBasicNHApp.Tests
         {
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
-            _sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
+			var migrator = new MigrationsTest.ExecuteAndRedirectOutput(Path.Combine("..", "..", "..", "packages", "FluentMigrator.1.3.1.0", "tools", "Migrate.exe"), "/connection \"Data Source=CustomerDataTests.db;Version=3;\" /db sqlite /target DbMigrations.dll");
+
+			_sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
             using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())

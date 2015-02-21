@@ -25,7 +25,15 @@ namespace SomeBasicNHApp.Core
 				return member.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase);
 			}
 		}
+		public class TableNameConvention : IClassConvention
+		{
+			public void Apply(FluentNHibernate.Conventions.Instances.IClassInstance instance)
+			{
+				string typeName = instance.EntityType.Name;
 
+				instance.Table(typeName+"s");
+			}
+		}
 		private readonly IMapPath _mapPath;
 
 		public Session(IMapPath mapPath)
@@ -44,6 +52,7 @@ namespace SomeBasicNHApp.Core
 #else
 			return conf.Mappings(m => m.AutoMappings.Add(new AutoPersistenceModel()
 				.AddEntityAssembly(typeof(Customer).Assembly)
+				.Conventions.Add(new TableNameConvention())
 				.Where(t => t.Namespace.EndsWith("Core.Entities")))
 				);
 #endif
