@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
+using System.Linq;
 
 namespace SomeBasicNHApp.Tests
 {
@@ -58,7 +59,8 @@ namespace SomeBasicNHApp.Tests
         [Test]
         public void Migrate()
         {
-            var migrator = new ExecuteAndRedirectOutput(Path.Combine("..", "..", "..", "packages", "FluentMigrator.1.3.1.0", "tools", "Migrate.exe"), "/connection \"Data Source=MigrationsTest.db;Version=3;\" /db sqlite /target DbMigrations.dll");
+			var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Single();
+            var migrator = new ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"), "/connection \"Data Source=MigrationsTest.db;Version=3;\" /db sqlite /target DbMigrations.dll");
 
             migrator.StartAndWaitForExit();
         }
