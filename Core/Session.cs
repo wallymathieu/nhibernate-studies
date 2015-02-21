@@ -24,6 +24,10 @@ namespace SomeBasicNHApp.Core
 			{
 				return member.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase);
 			}
+			public override Type GetParentSideForManyToMany(Type left, Type right)
+			{
+				return base.GetParentSideForManyToMany(left, right);
+			}
 		}
 		public class TableNameConvention : IClassConvention
 		{
@@ -31,7 +35,7 @@ namespace SomeBasicNHApp.Core
 			{
 				string typeName = instance.EntityType.Name;
 
-				instance.Table(typeName+"s");
+				instance.Table(typeName + "s");
 			}
 		}
 		private readonly IMapPath _mapPath;
@@ -68,14 +72,18 @@ namespace SomeBasicNHApp.Core
 				  .UsingFile(file)))
 			  .BuildSessionFactory();
 		}
-		public ISessionFactory CreateTestSessionFactory(string file)
+		public ISessionFactory CreateTestSessionFactory(string file, bool newDb = false)
 		{
 			return ConfigureMaps(Fluently.Configure()
 			  .Database(
 				SQLiteConfiguration.Standard.UsingFile(file))//NOTE:why not use in memory? some queries wont work for nhibernate
 			  ).ExposeConfiguration(cfg =>
-				  new SchemaExport(cfg).Execute(true, true, false)
-			  )
+			  {
+				  if (newDb)
+				  {
+					  new SchemaExport(cfg).Execute(true, true, false);
+				  }
+			  })
 			  .BuildSessionFactory();
 		}
 	}

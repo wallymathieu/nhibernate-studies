@@ -8,6 +8,5 @@
 		<property name="Firstname" />
 		<property name="Lastname" />
 		<property name="Version" />
-		<many-to-one name="Orders" class="Order"></many-to-one>
 	</class>
 </hibernate-mapping>

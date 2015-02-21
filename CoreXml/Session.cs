@@ -12,16 +12,19 @@ namespace SomeBasicNHApp.Core
 		{
 			_mapPath = mapPath;
 		}
-		public ISessionFactory CreateTestSessionFactory(string file)
+		public ISessionFactory CreateTestSessionFactory(string file, bool newDb = false)
 		{
 			var cfg = new Configuration();
 			cfg.Configure();
 			cfg.SetProperty("connection.connection_string", "Data Source=" + file + ";Version=3");
-            var schema = new NHibernate.Tool.hbm2ddl.SchemaExport(cfg);
-			using (var connection = new SQLiteConnection(@"Data Source="+file+";Version=3;New=True"))
+			if (newDb)
 			{
-				connection.Open();
-				schema.Execute(true, true, false, connection, null);
+				var schema = new NHibernate.Tool.hbm2ddl.SchemaExport(cfg);
+				using (var connection = new SQLiteConnection(@"Data Source=" + file + ";Version=3;New=True"))
+				{
+					connection.Open();
+					schema.Execute(true, true, false, connection, null);
+				}
 			}
 			return cfg.BuildSessionFactory();
 		}

@@ -49,6 +49,7 @@ namespace SomeBasicNHApp.Tests
             {
                 _p.Start();
                 _p.WaitForExit();
+				Console.WriteLine(_p.StandardOutput.ReadToEnd());
                 if (_p.ExitCode != 0)
                 {
                     throw new Exception(String.Format("Process exit code {0}, with output:\n------\n{1}\n------\n", _p.ExitCode, _p.StandardError.ReadToEnd()));

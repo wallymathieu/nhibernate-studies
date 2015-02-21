@@ -35,7 +35,8 @@ namespace SomeBasicNHApp.DbMigrations
                 .WithIdColumn()
                 .WithVersionColumn()
                 .WithColumn("OrderDate").AsDateTime()
-                .WithColumn("Customer_id").AsInt32();
+                .WithColumn("Customer_id").AsInt32()
+					.Nullable();
 
             Create.Table("OrdersToProducts")
                 .WithColumn("Order_id").AsInt32().NotNullable()

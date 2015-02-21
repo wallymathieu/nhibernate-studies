@@ -7,8 +7,7 @@
 		</id>
 		<property name="OrderDate" />
 		<property name="Version" />
-		<one-to-one name="Customer" class="Customer">
-		</one-to-one>
+		<many-to-one name="Customer" class="Customer" column="Customer_id"></many-to-one>
 		<bag name="Products" table="OrdersToProducts">
 			<key column="Order_id"></key>
 			<many-to-many class="Product" column="Product_id"></many-to-many>
