@@ -9,7 +9,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using NUnit.Framework;
 using Order = SomeBasicNHApp.Core.Order;
-
+using System.Linq;
 namespace SomeBasicNHApp.Tests
 {
     [TestFixture]
@@ -46,8 +46,19 @@ namespace SomeBasicNHApp.Tests
 
             Assert.IsNotNull(product);
         }
+		[Test]
+		public void OrderContainsProduct()
+		{
+			Assert.True(_session.Get<Order>(1).Products.Any(p => p.Id == 1));
+		}
+		[Test]
+		public void OrderHasACustomer()
+		{
+			Assert.IsNotNullOrEmpty(_session.Get<Order>(1).Customer.Firstname);
+		}
 
-        [SetUp]
+
+		[SetUp]
         public void Setup()
         {
             _session = _sessionFactory.OpenSession();
@@ -67,14 +78,30 @@ namespace SomeBasicNHApp.Tests
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
             _sessionFactory = _unityContainer.Resolve<Session>().CreateTestSessionFactory("CustomerDataTests.db");
-            using(var session = _sessionFactory.OpenSession())
+			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
+            using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())
             {
-                XmlImport.Parse(XDocument.Load(Path.Combine("TestData", "TestData.xml")), new[] { typeof(Customer), typeof(Order), typeof(Product) },
+                XmlImport.Parse(doc, new[] { typeof(Customer), typeof(Order), typeof(Product) },
                                 (type, obj) => session.Save(type.Name, obj), "http://tempuri.org/Database.xsd");
                 tnx.Commit();
             }
-        }
+			using (var session = _sessionFactory.OpenSession())
+			using (var tnx = session.BeginTransaction())
+			{
+				XmlImport.ParseConnections(doc, "OrderProduct", "Product", "Order", (productId, orderId) => {
+					var product = session.Get<Product>(productId);
+					var order = session.Get<Order>(orderId);
+					order.Products.Add(product);
+				}, "http://tempuri.org/Database.xsd");
+
+				XmlImport.ParseIntProperty(doc,"Order","Customer",
+				(orderId, customerId) => {
+					session.Get<Order>(orderId).Customer = session.Get<Customer>(customerId);
+				}, "http://tempuri.org/Database.xsd");
+				tnx.Commit();
+			}
+		}
 
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
