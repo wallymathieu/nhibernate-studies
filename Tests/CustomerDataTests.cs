@@ -71,9 +71,8 @@ namespace SomeBasicNHApp.Tests
         public void TestFixtureSetup()
         {
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
-			var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Single();
 
-			var migrator = new MigrationsTest.ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"), "/connection \"Data Source=CustomerDataTests.db;Version=3;\" /db sqlite /target DbMigrations.dll");
+			new MigrationsTest.Migrator("CustomerDataTests.db").Migrate();
 
 			_sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));

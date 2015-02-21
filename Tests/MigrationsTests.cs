@@ -56,13 +56,25 @@ namespace SomeBasicNHApp.Tests
             }
         }
 
+		public class Migrator
+		{
+			private readonly string _db;
+			public Migrator(string db)
+			{
+				_db = db;
+			}
+			public void Migrate() {
+				var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Single();
+				var migrator = new ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"), "/connection \"Data Source="+_db+";Version=3;\" /db sqlite /target DbMigrations.dll");
+
+				migrator.StartAndWaitForExit();
+			}
+		}
+
         [Test]
         public void Migrate()
         {
-			var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Single();
-            var migrator = new ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"), "/connection \"Data Source=MigrationsTest.db;Version=3;\" /db sqlite /target DbMigrations.dll");
-
-            migrator.StartAndWaitForExit();
+            new Migrator("MigrationsTest.db").Migrate();
         }
     }
 }
