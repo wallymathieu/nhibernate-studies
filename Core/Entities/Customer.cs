@@ -1,4 +1,6 @@
-﻿namespace SomeBasicNHApp.Core.Entities
+﻿using System.Collections.Generic;
+
+namespace SomeBasicNHApp.Core.Entities
 {
     public class Customer : IIdentifiableByNumber
     {
@@ -9,7 +11,7 @@
 
         public virtual string Lastname { get; set; }
 
-        public virtual System.Collections.Generic.IList<Order> Orders { get; set; }
+        public virtual IList<Order> Orders { get; set; }
 
         public virtual int Version { get; set; }
 
