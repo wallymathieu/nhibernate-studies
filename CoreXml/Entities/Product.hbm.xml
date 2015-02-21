@@ -2,12 +2,15 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="CoreXml"
                    namespace="SomeBasicNHApp.Core.Entities">
-	<class name="Customer" table="Customers">
+	<class name="Product" table="Products">
 		<id name="Id">
 		</id>
-		<property name="Firstname" />
-		<property name="Lastname" />
+		<property name="Name" />
+		<property name="Cost" />
+		<bag name="Orders" table="OrdersToProducts">
+			<key column="Product_id"></key>
+			<many-to-many class="Order" column="Order_id"></many-to-many>
+		</bag>
 		<property name="Version" />
-		<many-to-one name="Orders" class="Order"></many-to-one>
 	</class>
 </hibernate-mapping>

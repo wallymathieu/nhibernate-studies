@@ -3,54 +3,54 @@ using NHibernate;
 using NUnit.Framework;
 using System.IO;
 using SomeBasicNHApp.Core.Entities;
+using SomeBasicNHApp.Core;
 
 namespace SomeBasicNHApp.CoreXml
 {
-    [TestFixture]
-    public class CustomerInNHibernateTest
-    {
-        private NHibernate.ISession _session;
+	[TestFixture]
+	public class CustomerInNHibernateTest
+	{
+		private NHibernate.ISession _session;
 
-        private ISessionFactory _sessionManager;
-
-
-        [SetUp]
-        public void Setup()
-        {
-            if (File.Exists("CustomerInNHibernateTest.db")) { File.Delete("CustomerInNHibernateTest.db"); }
-
-            var cfg = new NHibernate.Cfg.Configuration();
-
-            cfg.Configure();
-
-            var schema = new NHibernate.Tool.hbm2ddl.SchemaExport(cfg);
-            using (var connection = new SQLiteConnection(@"Data Source=CustomerInNHibernateTest.db;Version=3;New=True"))
-            {
-                connection.Open();
-                schema.Execute(true, true, false, connection, null);
-            }
-            _sessionManager = cfg.BuildSessionFactory();
-
-            _session = _sessionManager.OpenSession();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-        }
+		private ISessionFactory _sessionManager;
 
 
-        [Test]
-        public void CanAddCustomer()
-        {
-            var customer = new Customer { Firstname = "Steve", Lastname = "Bohlen" };
-            var newIdentity = _session.Save(customer);
+		[SetUp]
+		public void Setup()
+		{
+			if (File.Exists("CustomerInNHibernateTest.db")) { File.Delete("CustomerInNHibernateTest.db"); }
+
+			_sessionManager = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerInNHibernateTest.db");
+			_session = _sessionManager.OpenSession();
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			if (_session != null)
+			{
+				_session.Dispose();
+				_session = null;
+			}
+			if (_sessionManager != null)
+			{
+				_sessionManager.Dispose();
+				_sessionManager = null;
+			}
+		}
 
 
-            var testCustomer = _session.Get<Customer>(newIdentity);
+		[Test]
+		public void CanAddCustomer()
+		{
+			var customer = new Customer { Firstname = "Steve", Lastname = "Bohlen" };
+			var newIdentity = _session.Save(customer);
 
-            Assert.IsNotNull(testCustomer);
-        }
 
-    }
+			var testCustomer = _session.Get<Customer>(newIdentity);
+
+			Assert.IsNotNull(testCustomer);
+		}
+
+	}
 }

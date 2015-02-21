@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="CoreXml"
+                   namespace="SomeBasicNHApp.Core.Entities">
+	<class name="Order" table="Orders">
+		<id name="Id">
+		</id>
+		<property name="OrderDate" />
+		<property name="Version" />
+		<one-to-one name="Customer" class="Customer">
+		</one-to-one>
+		<bag name="Products" table="OrdersToProducts">
+			<key column="Order_id"></key>
+			<many-to-many class="Product" column="Product_id"></many-to-many>
+		</bag>
+	</class>
+</hibernate-mapping>
