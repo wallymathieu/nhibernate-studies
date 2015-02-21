@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using SomeBasicNHApp.Code;
 using SomeBasicNHApp.Core;
 using NHibernate.Linq;
+using SomeBasicNHApp.Core.Entities;
 
 namespace SomeBasicNHApp.Controllers
 {

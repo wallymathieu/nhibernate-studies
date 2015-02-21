@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
-using SomeBasicNHApp.Core;
-using SomeBasicNHApp.DbMigrations;
-using Microsoft.Practices.Unity;
-using NHibernate;
-using NHibernate.Criterion;
 using NUnit.Framework;
-using Order = SomeBasicNHApp.Core.Order;
-using System.Text;
 
 namespace SomeBasicNHApp.Tests
 {
 
-    [TestFixture]
+	[TestFixture]
     public class MigrationsTest
     {
-        private UnityContainer _unityContainer;
 
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
             if (File.Exists("MigrationsTest.db")) { File.Delete("MigrationsTest.db"); }
 
-            _unityContainer = new UnityContainer().RegisterCore(Runtime.Console);
         }
 
         [TestFixtureTearDown]

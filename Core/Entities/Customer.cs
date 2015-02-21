@@ -1,4 +1,4 @@
-﻿namespace SomeBasicNHApp.Core
+﻿namespace SomeBasicNHApp.Core.Entities
 {
     public class Customer : IIdentifiableByNumber
     {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using SomeBasicNHApp.Core;
 using NUnit.Framework;
+using SomeBasicNHApp.Core.Entities;
 
 namespace SomeBasicNHApp.Tests
 {

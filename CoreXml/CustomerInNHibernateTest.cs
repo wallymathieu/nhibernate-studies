@@ -2,8 +2,9 @@
 using NHibernate;
 using NUnit.Framework;
 using System.IO;
+using SomeBasicNHApp.Core.Entities;
 
-namespace CoreXml
+namespace SomeBasicNHApp.CoreXml
 {
     [TestFixture]
     public class CustomerInNHibernateTest

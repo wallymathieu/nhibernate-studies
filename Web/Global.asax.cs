@@ -1,18 +1,13 @@
-﻿using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using SomeBasicNHApp.Code;
-using SomeBasicNHApp.Core;
-using Microsoft.Practices.Unity;
-using NHibernate;
 
 namespace SomeBasicNHApp
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
+	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
+	// visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+	public class MvcApplication : System.Web.HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -38,9 +33,6 @@ namespace SomeBasicNHApp
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            var container = new UnityContainer().RegisterCore(Runtime.Web);
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

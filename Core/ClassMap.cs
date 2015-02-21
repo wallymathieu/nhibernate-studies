@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FluentNHibernate.Mapping;
+using SomeBasicNHApp.Core.Entities;
 
 namespace SomeBasicNHApp.Core
 {

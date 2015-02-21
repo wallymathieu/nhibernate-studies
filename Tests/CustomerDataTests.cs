@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Linq;
 using SomeBasicNHApp.Core;
-using SomeBasicNHApp.DbMigrations;
-using Microsoft.Practices.Unity;
 using NHibernate;
-using NHibernate.Criterion;
 using NUnit.Framework;
-using Order = SomeBasicNHApp.Core.Order;
+using Order = SomeBasicNHApp.Core.Entities.Order;
 using System.Linq;
+using SomeBasicNHApp.Core.Entities;
+
 namespace SomeBasicNHApp.Tests
 {
-    [TestFixture]
+	[TestFixture]
     public class CustomerDataTests
     {
 
         private ISessionFactory _sessionFactory;
 
         private ISession _session;
-        private IUnityContainer _unityContainer;
 
 
         [Test]
@@ -74,10 +70,9 @@ namespace SomeBasicNHApp.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
-            _unityContainer = new UnityContainer().RegisterCore(Runtime.Console);
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
-            _sessionFactory = _unityContainer.Resolve<Session>().CreateTestSessionFactory("CustomerDataTests.db");
+            _sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
             using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())

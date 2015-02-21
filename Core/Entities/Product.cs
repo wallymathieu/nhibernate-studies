@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace CoreXml
+namespace SomeBasicNHApp.Core.Entities
 {
-    public class Product 
+    public class Product : IIdentifiableByNumber
     {
 
         public virtual float Cost { get; set; }

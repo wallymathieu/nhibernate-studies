@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreXml
+namespace SomeBasicNHApp.Core.Entities
 {
-    public class Order 
+    public class Order : IIdentifiableByNumber
     {
         public virtual Customer Customer { get; set; }
 
