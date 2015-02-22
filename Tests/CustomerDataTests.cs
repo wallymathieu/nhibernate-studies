@@ -11,21 +11,21 @@ using System;
 namespace SomeBasicNHApp.Tests
 {
 	[TestFixture]
-    public class CustomerDataTests
-    {
+	public class CustomerDataTests
+	{
 
-        private ISessionFactory _sessionFactory;
+		private ISessionFactory _sessionFactory;
 
-        private ISession _session;
+		private ISession _session;
 
 
-        [Test]
-        public void CanGetCustomerById()
-        {
-            var customer = _session.Get<Customer>(1);
+		[Test]
+		public void CanGetCustomerById()
+		{
+			var customer = _session.Get<Customer>(1);
 
-            Assert.IsNotNull(customer);
-        }
+			Assert.IsNotNull(customer);
+		}
 
 		[Test]
 		public void CustomerHasOrders()
@@ -44,21 +44,21 @@ namespace SomeBasicNHApp.Tests
 		}
 
 		[Test]
-        public void CanGetCustomerByFirstname()
-        {
-            var customers = _session.QueryOver<Customer>()
-                .Where(c => c.Firstname == "Steve")
-                .List<Customer>();
-            Assert.AreEqual(3, customers.Count);
-        }
+		public void CanGetCustomerByFirstname()
+		{
+			var customers = _session.QueryOver<Customer>()
+				.Where(c => c.Firstname == "Steve")
+				.List<Customer>();
+			Assert.AreEqual(3, customers.Count);
+		}
 
-        [Test]
-        public void CanGetProductById()
-        {
-            var product = _session.Get<Product>(1);
+		[Test]
+		public void CanGetProductById()
+		{
+			var product = _session.Get<Product>(1);
 
-            Assert.IsNotNull(product);
-        }
+			Assert.IsNotNull(product);
+		}
 		[Test]
 		public void OrderContainsProduct()
 		{
@@ -72,58 +72,60 @@ namespace SomeBasicNHApp.Tests
 
 
 		[SetUp]
-        public void Setup()
-        {
-            _session = _sessionFactory.OpenSession();
-        }
+		public void Setup()
+		{
+			_session = _sessionFactory.OpenSession();
+		}
 
 
-        [TearDown]
-        public void TearDown()
-        {
-            _session.Close();
-        }
+		[TearDown]
+		public void TearDown()
+		{
+			_session.Close();
+		}
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
-        {
-            if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
+		[TestFixtureSetUp]
+		public void TestFixtureSetup()
+		{
+			if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
 			new MigrationsTest.Migrator("CustomerDataTests.db").Migrate();
 
 			_sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
 			var import = new XmlImport(doc, "http://tempuri.org/Database.xsd");
-            using (var session = _sessionFactory.OpenSession())
-            using (var tnx = session.BeginTransaction())
-            {
-				import.Parse(new[] { typeof(Customer), typeof(Order), typeof(Product) },
-                                (type, obj) => session.Save(type.Name, obj),onIgnore: (type,property)=> {
-									Console.WriteLine("ignoring property {1} on {0}", type.Name, property.PropertyType.Name);
-								});
-                tnx.Commit();
-            }
 			using (var session = _sessionFactory.OpenSession())
 			using (var tnx = session.BeginTransaction())
 			{
-				import.ParseConnections("OrderProduct", "Product", "Order", (productId, orderId) => {
+				import.Parse(new[] { typeof(Customer), typeof(Order), typeof(Product) },
+								(type, obj) => session.Save(type.Name, obj), onIgnore: (type, property) =>
+								{
+									Console.WriteLine("ignoring property {1} on {0}", type.Name, property.PropertyType.Name);
+								});
+				tnx.Commit();
+			}
+			using (var session = _sessionFactory.OpenSession())
+			using (var tnx = session.BeginTransaction())
+			{
+				import.ParseConnections("OrderProduct", "Product", "Order", (productId, orderId) =>
+				{
 					var product = session.Get<Product>(productId);
 					var order = session.Get<Order>(orderId);
 					order.Products.Add(product);
 				});
 
-				import.ParseIntProperty("Order","Customer",
-				(orderId, customerId) => {
+				import.ParseIntProperty("Order", "Customer", (orderId, customerId) =>
+				{
 					session.Get<Order>(orderId).Customer = session.Get<Customer>(customerId);
 				});
 				tnx.Commit();
 			}
 		}
 
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            _sessionFactory.Dispose();
-        }
-    }
+		[TestFixtureTearDown]
+		public void TestFixtureTearDown()
+		{
+			_sessionFactory.Dispose();
+		}
+	}
 }

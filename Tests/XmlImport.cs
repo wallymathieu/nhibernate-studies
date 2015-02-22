@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 
@@ -18,7 +19,7 @@ namespace SomeBasicNHApp.Tests
 		private object Parse(XElement target, Type type, Action<Type, PropertyInfo> onIgnore)
 		{
 			var props = type.GetProperties();
-			var customerObj = Activator.CreateInstance(type);
+			var @object = Activator.CreateInstance(type);
 			foreach (var propertyInfo in props)
 			{
 				XElement propElement = target.Element(_ns + propertyInfo.Name);
@@ -26,19 +27,19 @@ namespace SomeBasicNHApp.Tests
 				{
 					if (!(propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string)))
 					{
-						onIgnore(type, propertyInfo);
+						if (null!=onIgnore) onIgnore(type, propertyInfo);
 					}
 					else
 					{
 						var value = Convert.ChangeType(propElement.Value, propertyInfo.PropertyType, CultureInfo.InvariantCulture.NumberFormat);
-						propertyInfo.SetValue(customerObj, value, null);
+						propertyInfo.SetValue(@object, value, null);
 					}
 				}
 			}
-			return customerObj;
+			return @object;
 		}
 
-		public IEnumerable<Tuple<Type, Object>> Parse(IEnumerable<Type> types, Action<Type, Object> onParsedEntity = null, Action<Type, PropertyInfo> onIgnore=null)
+		public IEnumerable<Tuple<Type, Object>> Parse(IEnumerable<Type> types, Action<Type, Object> onParsedEntity = null, Action<Type, PropertyInfo> onIgnore = null)
 		{
 			var db = xDocument.Root;
 			var list = new List<Tuple<Type, Object>>();
