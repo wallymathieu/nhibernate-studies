@@ -65,7 +65,7 @@ namespace SomeBasicNHApp.Tests
 				_db = db;
 			}
 			public void Migrate() {
-				var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Single();
+				var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Last();
 				var migrator = new ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"), "/connection \"Data Source="+_db+";Version=3;\" /db sqlite /target DbMigrations.dll");
 
 				migrator.StartAndWaitForExit();
