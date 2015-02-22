@@ -92,26 +92,27 @@ namespace SomeBasicNHApp.Tests
 
 			_sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
+			var import = new XmlImport(doc, "http://tempuri.org/Database.xsd");
             using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())
             {
-                XmlImport.Parse(doc, new[] { typeof(Customer), typeof(Order), typeof(Product) },
-                                (type, obj) => session.Save(type.Name, obj), "http://tempuri.org/Database.xsd");
+				import.Parse(new[] { typeof(Customer), typeof(Order), typeof(Product) },
+                                (type, obj) => session.Save(type.Name, obj));
                 tnx.Commit();
             }
 			using (var session = _sessionFactory.OpenSession())
 			using (var tnx = session.BeginTransaction())
 			{
-				XmlImport.ParseConnections(doc, "OrderProduct", "Product", "Order", (productId, orderId) => {
+				import.ParseConnections("OrderProduct", "Product", "Order", (productId, orderId) => {
 					var product = session.Get<Product>(productId);
 					var order = session.Get<Order>(orderId);
 					order.Products.Add(product);
-				}, "http://tempuri.org/Database.xsd");
+				});
 
-				XmlImport.ParseIntProperty(doc,"Order","Customer",
+				import.ParseIntProperty("Order","Customer",
 				(orderId, customerId) => {
 					session.Get<Order>(orderId).Customer = session.Get<Customer>(customerId);
-				}, "http://tempuri.org/Database.xsd");
+				});
 				tnx.Commit();
 			}
 		}
