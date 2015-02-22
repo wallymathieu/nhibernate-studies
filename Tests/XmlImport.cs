@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
-using SomeBasicNHApp.Core;
-using NUnit.Framework;
-using SomeBasicNHApp.Core.Entities;
 
 namespace SomeBasicNHApp.Tests
 {
@@ -18,7 +15,7 @@ namespace SomeBasicNHApp.Tests
 			_ns = ns;
 			this.xDocument = xDocument;
 		}
-		public object Parse(XElement target, Type type)
+		private object Parse(XElement target, Type type, Action<Type, PropertyInfo> onIgnore)
 		{
 			var props = type.GetProperties();
 			var customerObj = Activator.CreateInstance(type);
@@ -29,7 +26,7 @@ namespace SomeBasicNHApp.Tests
 				{
 					if (!(propertyInfo.PropertyType.IsValueType || propertyInfo.PropertyType == typeof(string)))
 					{
-						Console.WriteLine("ignoring {0} {1}", type.Name, propertyInfo.PropertyType.Name);
+						onIgnore(type, propertyInfo);
 					}
 					else
 					{
@@ -41,10 +38,9 @@ namespace SomeBasicNHApp.Tests
 			return customerObj;
 		}
 
-		public IEnumerable<Tuple<Type, Object>> Parse(IEnumerable<Type> types, Action<Type, Object> onParsedEntity = null)
+		public IEnumerable<Tuple<Type, Object>> Parse(IEnumerable<Type> types, Action<Type, Object> onParsedEntity = null, Action<Type, PropertyInfo> onIgnore=null)
 		{
 			var db = xDocument.Root;
-			Assert.That(db, Is.Not.Null);
 			var list = new List<Tuple<Type, Object>>();
 
 			foreach (var type in types)
@@ -53,7 +49,7 @@ namespace SomeBasicNHApp.Tests
 
 				foreach (var element in elements)
 				{
-					var obj = Parse(element, type);
+					var obj = Parse(element, type, onIgnore);
 					if (null != onParsedEntity) onParsedEntity(type, obj);
 					list.Add(Tuple.Create(type, obj));
 				}
@@ -64,7 +60,6 @@ namespace SomeBasicNHApp.Tests
 		{
 			var ns = _ns;
 			var db = xDocument.Root;
-			Assert.That(db, Is.Not.Null);
 			var elements = db.Elements(ns + name);
 			var list = new List<Tuple<int, int>>();
 			foreach (var element in elements)
@@ -83,7 +78,6 @@ namespace SomeBasicNHApp.Tests
 		{
 			var ns = _ns;
 			var db = xDocument.Root;
-			Assert.That(db, Is.Not.Null);
 			var elements = db.Elements(ns + name);
 			var list = new List<Tuple<int, int>>();
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Order = SomeBasicNHApp.Core.Entities.Order;
 using System.Linq;
 using SomeBasicNHApp.Core.Entities;
+using System;
 
 namespace SomeBasicNHApp.Tests
 {
@@ -97,7 +98,9 @@ namespace SomeBasicNHApp.Tests
             using (var tnx = session.BeginTransaction())
             {
 				import.Parse(new[] { typeof(Customer), typeof(Order), typeof(Product) },
-                                (type, obj) => session.Save(type.Name, obj));
+                                (type, obj) => session.Save(type.Name, obj),onIgnore: (type,property)=> {
+									Console.WriteLine("ignoring property {1} on {0}", type.Name, property.PropertyType.Name);
+								});
                 tnx.Commit();
             }
 			using (var session = _sessionFactory.OpenSession())
