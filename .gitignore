@@ -12,3 +12,4 @@ AwesomeNHApp.userprefs
 packages/
 .db.sqlite
 .vs
+*.userprefs
