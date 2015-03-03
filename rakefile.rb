@@ -1,7 +1,6 @@
 require_relative './.nuget/nuget'
 
 require 'albacore'
-require 'win32ole'
 require 'fileutils'
 require 'rexml/document'
 
@@ -24,8 +23,7 @@ end
 
 desc "test using console"
 test_runner :test => [:build] do |runner|
-  runner.exe =NuGet::nunit_86_path
-  #{}"  /framework=net-4.5 "  
+  runner.exe = NuGet::nunit_86_path
   d = File.dirname(__FILE__)
   files = [File.join(d,"Tests","bin","Debug","Tests.dll"),
     File.join(d,"CoreXml","bin","Debug","CoreXml.dll"),

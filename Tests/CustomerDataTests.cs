@@ -89,7 +89,7 @@ namespace SomeBasicNHApp.Tests
 		{
 			if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
-			new MigrationsTest.Migrator("CustomerDataTests.db").Migrate();
+			new Migrator("CustomerDataTests.db").Migrate();
 
 			_sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
 			var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));

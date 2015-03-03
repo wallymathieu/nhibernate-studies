@@ -104,8 +104,11 @@
     <Compile Include="..\Tests\CustomerDataTests.cs">
       <Link>CustomerDataTests.cs</Link>
     </Compile>
-    <Compile Include="..\Tests\MigrationsTests.cs">
-      <Link>MigrationsTests.cs</Link>
+    <Compile Include="..\Tests\Migrator.cs">
+      <Link>Migrator.cs</Link>
+    </Compile>
+    <Compile Include="..\Tests\ExecuteAndRedirectOutput.cs">
+      <Link>ExecuteAndRedirectOutput.cs</Link>
     </Compile>
     <Compile Include="..\Tests\XmlImport.cs">
       <Link>XmlImport.cs</Link>
