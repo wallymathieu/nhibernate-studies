@@ -88,18 +88,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Tests\TestData\Database.xsc">
-      <Link>TestData\Database.xsc</Link>
-      <DependentUpon>Database.xsd</DependentUpon>
-    </None>
-    <None Include="..\Tests\TestData\Database.xsd">
-      <Link>TestData\Database.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\Tests\TestData\Database.xss">
-      <Link>TestData\Database.xss</Link>
-      <DependentUpon>Database.xsd</DependentUpon>
-    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

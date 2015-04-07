@@ -87,13 +87,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="TestData\Database.xsc">
-      <DependentUpon>Database.xsd</DependentUpon>
-    </None>
-    <None Include="TestData\Database.xsd" />
-    <None Include="TestData\Database.xss">
-      <DependentUpon>Database.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="TestData\TestData.xml">
