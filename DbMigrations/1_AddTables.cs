@@ -21,7 +21,7 @@ using FluentMigrator;
 namespace SomeBasicNHApp.DbMigrations
 {
     [Migration(20110404074742)]
-    public class AddTables : Migration
+    public class AddTables : AutoReversingMigration
     {
         public override void Up()
         {
@@ -36,7 +36,7 @@ namespace SomeBasicNHApp.DbMigrations
                 .WithVersionColumn()
                 .WithColumn("OrderDate").AsDateTime()
                 .WithColumn("Customer_id").AsInt32()
-					.Nullable();
+                    .Nullable();
 
             Create.Table("OrdersToProducts")
                 .WithColumn("Order_id").AsInt32().NotNullable()
@@ -48,14 +48,6 @@ namespace SomeBasicNHApp.DbMigrations
                 .WithVersionColumn()
                 .WithColumn("Cost").AsFloat()
                 .WithColumn("Name").AsString();
-        }
-
-        public override void Down()
-        {
-            Delete.Table("Customers");
-            Delete.Table("Orders");
-            Delete.Table("OrdersToProducts");
-            Delete.Table("Products");
         }
     }
 }
