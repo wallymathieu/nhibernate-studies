@@ -1,4 +1,5 @@
 # A sample Gemfile
 source "https://rubygems.org"
 gem "albacore"
-# gem "rails"
+gem "nuget_helper"
+gem "paket_bootstrapper"

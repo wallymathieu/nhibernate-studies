@@ -1,8 +1,7 @@
-require_relative './.nuget/nuget'
-
 require 'albacore'
 require 'fileutils'
 require 'rexml/document'
+require 'nuget_helper'
 
 include FileUtils
 
@@ -11,19 +10,29 @@ task :default => [:all]
 desc "Rebuild solution"
 build :build do |msb, args|
   msb.prop :configuration, :Debug
+  msb.prop :platform, 'Any CPU'
   msb.prop :VisualStudioVersion, '12.0' # build fails sometimes because of wrong vs version in env
   msb.target = [:Rebuild]
   msb.sln = "nhibernate-studies.sln"
 end
 
+desc "bootstrap"
+task :bootstrap do
+  sh("paket.bootstrapper")
+end
+
+def paket params
+  sh("paket #{params}")
+end
+
 desc "Install missing NuGet packages."
-task :install_packages do
-    NuGet::exec("restore nhibernate-studies.sln -source http://www.nuget.org/api/v2/")
+task :install_packages => :bootstrap do
+  paket "restore"
 end
 
 desc "test using console"
 test_runner :test => [:build] do |runner|
-  runner.exe = NuGet::nunit_86_path
+  runner.exe = NugetHelper::nunit_path
   d = File.dirname(__FILE__)
   files = [File.join(d,"Tests","bin","Debug","Tests.dll"),
     File.join(d,"CoreXml","bin","Debug","CoreXml.dll"),
@@ -40,7 +49,7 @@ task :all => [:build, "migrations:run"]
 namespace :migrations do
   pwd = File.dirname(__FILE__)
   def sqlite
-     "#{NuGet::migrate_path} /connection \"Data Source=#{File.join(pwd,".db.sqlite")};Version=3;\" /db sqlite /target DbMigrations.dll"
+     "#{NugetHelper::migrate_path} /connection \"Data Source=#{File.join(pwd,".db.sqlite")};Version=3;\" /db sqlite /target DbMigrations.dll"
   end
   
   desc "Run migrations"
