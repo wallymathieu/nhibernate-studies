@@ -1,12 +1,3 @@
-EntityFramework
 FluentNHibernate
-Iesi.Collections
 Microsoft.AspNet.Mvc
-Microsoft.AspNet.Razor
-Microsoft.AspNet.WebPages
-Microsoft.Web.Infrastructure
-NHibernate
 System.Data.SQLite
-System.Data.SQLite.Core
-System.Data.SQLite.EF6
-System.Data.SQLite.Linq

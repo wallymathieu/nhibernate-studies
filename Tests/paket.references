@@ -1,10 +1,4 @@
-EntityFramework
 FluentMigrator
 FluentNHibernate
-Iesi.Collections
-NHibernate
 NUnit
 System.Data.SQLite
-System.Data.SQLite.Core
-System.Data.SQLite.EF6
-System.Data.SQLite.Linq
