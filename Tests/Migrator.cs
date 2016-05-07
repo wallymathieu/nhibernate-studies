@@ -2,48 +2,32 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using System.Linq;
+using System.Data;
+using FluentMigrator.Runner.ConnectionExecutor;
+using FluentMigrator.Runner.Initialization;
+using FluentMigrator.Runner.Announcers;
 
 namespace SomeBasicNHApp.Tests
 {
 
     public class Migrator
     {
+        private readonly ConsoleAnnouncer consoleAnnouncer = new ConsoleAnnouncer();
+
         private readonly string _db;
         public Migrator(string db)
         {
             _db = db;
         }
-        public void Migrate()
+        public void Migrate(IDbConnection conn)
         {
-            var migratePath = Directory.GetDirectories(Path.Combine("..", "..", "..", "packages"), "FluentMigrator.*").Last();
-            var parameters = "/connection \"Data Source=" + _db + ";Version=3;\" /db sqlite /target DbMigrations.dll";
-            ExecuteAndRedirectOutput migrator;
-            if (IsWindows(Environment.OSVersion.Platform))
+            var executor = new ConnectionTaskExecutor(new RunnerContext(consoleAnnouncer)
             {
-                migrator = new ExecuteAndRedirectOutput(Path.Combine(migratePath, "tools", "Migrate.exe"),
-                    parameters);
-            }
-            else
-            {
-                migrator = new ExecuteAndRedirectOutput("mono",
-                "--runtime=v4.0.30319 " + Path.Combine(migratePath, "tools", "Migrate.exe") + " " + parameters);
-
-            }
-
-            migrator.StartAndWaitForExit();
-        }
-        private bool IsWindows(PlatformID plattform)
-        {
-            switch (plattform)
-            {
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.WinCE:
-                    return true;
-                default:
-                    return false;
-            }
+                Database = "sqlite",
+                Connection = "Data Source=" + _db + ";Version=3;",
+                Targets = new[] { "DbMigrations.dll" }
+            }, conn);
+            executor.Execute();
         }
     }
 

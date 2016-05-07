@@ -89,11 +89,13 @@ namespace SomeBasicNHApp.Tests
         {
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
-            new Migrator("CustomerDataTests.db").Migrate();
-
             _sessionFactory = new Session(new ConsoleMapPath()).CreateTestSessionFactory("CustomerDataTests.db");
             var doc = XDocument.Load(Path.Combine("TestData", "TestData.xml"));
             var import = new XmlImport(doc, "http://tempuri.org/Database.xsd");
+            using (var session = _sessionFactory.OpenSession())
+            {
+                new Migrator("CustomerDataTests.db").Migrate(session.Connection);
+            }
             using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())
             {

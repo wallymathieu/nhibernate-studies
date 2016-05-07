@@ -3,6 +3,11 @@ NUGET
   specs:
     EntityFramework (6.1.3) - framework: net40, net45, net451, >= net46
     FluentMigrator (1.6.1)
+    FluentMigrator.Runner (1.6.1)
+      FluentMigrator (>= 1.6.1)
+    FluentMigrator.Runner.ConnectionExecutor (1.0)
+      FluentMigrator (>= 1.6.1)
+      FluentMigrator.Runner (>= 1.6.1)
     FluentNHibernate (2.0.3)
       NHibernate (>= 4.0)
     Iesi.Collections (4.0.0.4000)
