@@ -2,32 +2,31 @@
 using System.Xml.Linq;
 using SomeBasicNHApp.Core;
 using NHibernate;
-using NUnit.Framework;
 using Order = SomeBasicNHApp.Core.Entities.Order;
 using System.Linq;
 using SomeBasicNHApp.Core.Entities;
 using System;
+using Xunit;
 
 namespace SomeBasicNHApp.Tests
 {
-    [TestFixture]
-    public class CustomerDataTests
+    public class CustomerDataTests:IDisposable
     {
 
-        private ISessionFactory _sessionFactory;
+        private static ISessionFactory _sessionFactory;
 
         private ISession _session;
 
 
-        [Test]
+        [Fact]
         public void CanGetCustomerById()
         {
             var customer = _session.Get<Customer>(1);
 
-            Assert.IsNotNull(customer);
+            Assert.NotNull(customer);
         }
 
-        [Test]
+        [Fact]
         public void CustomerHasOrders()
         {
             var customer = _session.Get<Customer>(1);
@@ -35,7 +34,7 @@ namespace SomeBasicNHApp.Tests
             Assert.True(customer.Orders.Any());
         }
 
-        [Test]
+        [Fact]
         public void ProductsArePartOfOrders()
         {
             var product = _session.Get<Product>(1);
@@ -43,49 +42,46 @@ namespace SomeBasicNHApp.Tests
             Assert.True(product.Orders.Any());
         }
 
-        [Test]
+        [Fact]
         public void CanGetCustomerByFirstname()
         {
             var customers = _session.QueryOver<Customer>()
                 .Where(c => c.Firstname == "Steve")
                 .List<Customer>();
-            Assert.AreEqual(3, customers.Count);
+            Assert.Equal(3, customers.Count);
         }
 
-        [Test]
+        [Fact]
         public void CanGetProductById()
         {
             var product = _session.Get<Product>(1);
 
-            Assert.IsNotNull(product);
+            Assert.NotNull(product);
         }
-        [Test]
+        [Fact]
         public void OrderContainsProduct()
         {
             Assert.True(_session.Get<Order>(1).Products.Any(p => p.Id == 1));
         }
-        [Test]
+        [Fact]
         public void OrderHasACustomer()
         {
-            Assert.IsNotNullOrEmpty(_session.Get<Order>(1).Customer.Firstname);
+            Assert.False(string.IsNullOrWhiteSpace( _session.Get<Order>(1).Customer.Firstname));
         }
 
 
-        [SetUp]
-        public void Setup()
+        public CustomerDataTests()
         {
             _session = _sessionFactory.OpenSession();
         }
 
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             _session.Close();
         }
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetup()
+        static CustomerDataTests()
         {
             if (File.Exists("CustomerDataTests.db")) { File.Delete("CustomerDataTests.db"); }
 
@@ -122,12 +118,6 @@ namespace SomeBasicNHApp.Tests
                 });
                 tnx.Commit();
             }
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            _sessionFactory.Dispose();
         }
     }
 }

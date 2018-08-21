@@ -40,15 +40,10 @@ namespace SomeBasicNHApp.Core
         }
         private readonly IMapPath _mapPath;
 
-        public Session(IMapPath mapPath)
-        {
-            _mapPath = mapPath;
-        }
-        private string WebPath()
-        {
-            var path = Directory.GetParent(_mapPath.MapPath(@"~/")).Parent;
-            return Path.Combine(path.FullName, ".db.sqlite");
-        }
+        public Session(IMapPath mapPath) => _mapPath = mapPath;
+        
+        private string WebPath() => _mapPath.MapPath(@"~/.db.sqlite");
+
         private FluentConfiguration ConfigureMaps(FluentConfiguration conf)
         {
 #if CLASSMAP
@@ -62,16 +57,11 @@ namespace SomeBasicNHApp.Core
 #endif
         }
 
-        public ISessionFactory CreateWebSessionFactory()
-        {
+        public ISessionFactory CreateWebSessionFactory() => 
+            ConfigureMaps(Fluently.Configure()
+                .Database(SQLiteConfiguration.Standard.UsingFile(WebPath()))
+            ).BuildSessionFactory();
 
-            var file = WebPath();
-            return ConfigureMaps(Fluently.Configure()
-              .Database(
-                SQLiteConfiguration.Standard
-                  .UsingFile(file)))
-              .BuildSessionFactory();
-        }
         public ISessionFactory CreateTestSessionFactory(string file, bool newDb = false)
         {
             return ConfigureMaps(Fluently.Configure()

@@ -1,5 +1,4 @@
-﻿using System.Web;
-
+﻿
 namespace SomeBasicNHApp.Core
 {
     public interface IMapPath
@@ -15,11 +14,4 @@ namespace SomeBasicNHApp.Core
         }
     }
 
-    public class WebMapPath : IMapPath
-    {
-        public string MapPath(string path)
-        {
-            return HttpContext.Current.Server.MapPath(path);
-        }
-    }
 }

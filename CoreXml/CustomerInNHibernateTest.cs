@@ -1,22 +1,20 @@
-﻿using System.Data.SQLite;
+﻿using System;
 using NHibernate;
-using NUnit.Framework;
 using System.IO;
 using SomeBasicNHApp.Core.Entities;
 using SomeBasicNHApp.Core;
+using Xunit;
 
 namespace SomeBasicNHApp.CoreXml
 {
-	[TestFixture]
-	public class CustomerInNHibernateTest
+	public class CustomerInNHibernateTest:IDisposable
 	{
 		private NHibernate.ISession _session;
 
 		private ISessionFactory _sessionManager;
 
 
-		[SetUp]
-		public void Setup()
+		public CustomerInNHibernateTest()
 		{
 			if (File.Exists("CustomerInNHibernateTest.db")) { File.Delete("CustomerInNHibernateTest.db"); }
 
@@ -24,8 +22,7 @@ namespace SomeBasicNHApp.CoreXml
 			_session = _sessionManager.OpenSession();
 		}
 
-		[TearDown]
-		public void TearDown()
+		public void Dispose()
 		{
 			if (_session != null)
 			{
@@ -40,7 +37,7 @@ namespace SomeBasicNHApp.CoreXml
 		}
 
 
-		[Test]
+		[Fact]
 		public void CanAddCustomer()
 		{
 			var customer = new Customer { Firstname = "Steve", Lastname = "Bohlen" };
@@ -49,7 +46,7 @@ namespace SomeBasicNHApp.CoreXml
 
 			var testCustomer = _session.Get<Customer>(newIdentity);
 
-			Assert.IsNotNull(testCustomer);
+			Assert.NotNull(testCustomer);
 		}
 
 	}
