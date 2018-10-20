@@ -42,7 +42,7 @@ namespace SomeBasicNHApp.Core
 
         public Session(IMapPath mapPath) => _mapPath = mapPath;
         
-        private string WebPath() => _mapPath.MapPath(@"~/.db.sqlite");
+        private string WebPath() => _mapPath.MapPath(".db.sqlite");
 
         private FluentConfiguration ConfigureMaps(FluentConfiguration conf)
         {

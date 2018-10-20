@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using SomeBasicNHApp.Core;
 
@@ -13,7 +14,6 @@ namespace SomeBasicNHApp
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public string MapPath(string path) => 
-            _hostingEnvironment.WebRootFileProvider.GetFileInfo(path).PhysicalPath;
+        public string MapPath(string path) => Path.Combine(_hostingEnvironment.ContentRootPath, "..", path);
     }
 }

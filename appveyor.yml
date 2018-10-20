@@ -1,9 +1,10 @@
 version: 1.0.{build}
 configuration: Release
 before_build:
-  - gem install bundler
-  - bundle install
-  - rake install_packages
-build:
-  project: nhibernate-studies.sln
-  verbosity: minimal
+  - dotnet restore nhibernate-studies.sln
+build_script:
+  - dotnet build nhibernate-studies.sln
+test_script:
+  - dotnet test Tests
+  - dotnet test CoreXml
+  - dotnet test ClassMapTests

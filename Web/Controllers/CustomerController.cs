@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NHibernate;
 using SomeBasicNHApp.Core.Entities;
+using SomeBasicNHApp.Models;
 
 namespace SomeBasicNHApp.Controllers
 {
@@ -23,21 +24,38 @@ namespace SomeBasicNHApp.Controllers
             return View(contexts.ToArray());
         }
 
-        public ActionResult Get(int id)
-        {
-            return View(_session.Get<Customer>(id));
-        }
+        public ActionResult Get(int id) => 
+            View(_session.Get<Customer>(id));
 
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => 
+            View();
 
         [ActionName("Create"), AcceptVerbs("POST")]
-        public ActionResult CreatePost(Customer context)
+        public ActionResult CreatePost([Bind("Firstname","Lastname")]Customer context)
         {
             _session.Save(context);
             return Redirect("/Customer");
+        }
+
+        public IActionResult Edit([FromQuery]int id) => 
+            View(_session.Get<Customer>(id));
+        
+        [ActionName("Edit"), AcceptVerbs("POST")]
+        public ActionResult EditPost([FromQuery]int id, CustomerEditModel model)
+        {
+            var customer = _session.Get<Customer>(id);
+            customer.Firstname = model.Firstname;
+            customer.Lastname = model.Lastname;
+            return Redirect("/Customer");
+        }
+
+
+        public IActionResult Details(int id)=>
+            View(_session.Get<Customer>(id));
+
+        public IActionResult Delete(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
