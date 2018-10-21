@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\CoreClassMap\CoreClassMap.csproj" />
-    <ProjectReference Include="..\..\src\DbMigrations\DbMigrations.csproj" />
+    <ProjectReference Include="..\..\migrations\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Tests\CustomerDataTests.cs" Link="CustomerDataTests.cs" />
