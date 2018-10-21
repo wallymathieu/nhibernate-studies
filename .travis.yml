@@ -10,6 +10,7 @@ script:
   - dotnet restore nhibernate-studies.sln
   - dotnet build nhibernate-studies.sln
   - dotnet test tests/Tests
+  - dotnet test tests\CoreFsTests
   - dotnet test tests/CoreXmlTests
   - dotnet test tests/ClassMapTests
 branches:
