@@ -1,0 +1,17 @@
+language: csharp
+sudo: false
+dist: trusty
+dotnet: 2.1.401
+mono:
+  - latest
+os:
+  - linux
+script: 
+  - dotnet restore nhibernate-studies.sln
+  - dotnet build nhibernate-studies.sln
+  - dotnet test Tests
+  - dotnet test CoreXmlTests
+  - dotnet test ClassMapTests
+branches:
+  only:
+    - master
