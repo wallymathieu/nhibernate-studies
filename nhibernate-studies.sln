@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22512.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{5623D5A6-938D-4E24-BB83-1263EFC06A58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{5623D5A6-938D-4E24-BB83-1263EFC06A58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbMigrations", "DbMigrations\DbMigrations.csproj", "{E09166D7-F356-44A6-A540-D88B7CF68AD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbMigrations", "src\DbMigrations\DbMigrations.csproj", "{E09166D7-F356-44A6-A540-D88B7CF68AD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{169AB275-721F-49B8-97FE-35D07DA1B6C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{169AB275-721F-49B8-97FE-35D07DA1B6C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F672502B-5D9C-4BDF-B7C6-93BB98FD5215}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "tests\Tests\Tests.csproj", "{F672502B-5D9C-4BDF-B7C6-93BB98FD5215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreXml", "CoreXml\CoreXml.csproj", "{29C982E3-06E3-4B8F-8F58-E07E3E1AD8E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreXml", "src\CoreXml\CoreXml.csproj", "{29C982E3-06E3-4B8F-8F58-E07E3E1AD8E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassMap", "CoreClassMap\CoreClassMap.csproj", "{00847F42-15F0-4B61-AA39-B4DE16416753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassMap", "src\CoreClassMap\CoreClassMap.csproj", "{00847F42-15F0-4B61-AA39-B4DE16416753}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassMapTests", "ClassMapTests\ClassMapTests.csproj", "{4A01447F-055B-43CF-8B50-9BC43F468A77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassMapTests", "tests\ClassMapTests\ClassMapTests.csproj", "{4A01447F-055B-43CF-8B50-9BC43F468A77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9661488D-EA74-4182-9BF8-403EBF3E6E3A}"
 EndProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{E0E1DD17-DCF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "migrations", "migrations", "{D3C73C86-58D5-48FB-8D0A-08B42BC6F8F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreXmlTests", "CoreXmlTests\CoreXmlTests.csproj", "{0FD2AC3F-955B-4C61-97EC-1F2AE874E0A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreXmlTests", "tests\CoreXmlTests\CoreXmlTests.csproj", "{0FD2AC3F-955B-4C61-97EC-1F2AE874E0A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

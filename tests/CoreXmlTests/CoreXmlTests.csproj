@@ -3,13 +3,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CoreXml\CoreXml.csproj" />
-    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <ProjectReference Include="..\..\src\CoreXml\CoreXml.csproj" />
+    <ProjectReference Include="..\..\src\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Tests\CustomerDataTests.cs" Link="CustomerDataTests.cs" />

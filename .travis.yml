@@ -9,9 +9,9 @@ os:
 script: 
   - dotnet restore nhibernate-studies.sln
   - dotnet build nhibernate-studies.sln
-  - dotnet test Tests
-  - dotnet test CoreXmlTests
-  - dotnet test ClassMapTests
+  - dotnet test tests/Tests
+  - dotnet test tests/CoreXmlTests
+  - dotnet test tests/ClassMapTests
 branches:
   only:
     - master

@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>SomeBasicNHApp.Tests</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ProjectGuid>{F672502B-5D9C-4BDF-B7C6-93BB98FD5215}</ProjectGuid>
-    <RootNamespace>SomeBasicNHApp.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
+    <ProjectReference Include="..\..\src\CoreClassMap\CoreClassMap.csproj" />
+    <ProjectReference Include="..\..\src\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -17,7 +12,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestData\TestData.xml">
+    <Compile Include="..\Tests\CustomerDataTests.cs" Link="CustomerDataTests.cs" />
+    <Compile Include="..\Tests\Migrator.cs" Link="Migrator.cs" />
+    <Compile Include="..\Tests\XmlImport.cs" Link="XmlImport.cs" />
+    <None Include="..\Tests\TestData\TestData.xml">
+      <Link>TestData\TestData.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
