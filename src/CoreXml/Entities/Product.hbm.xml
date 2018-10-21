@@ -8,8 +8,8 @@
 		<property name="Name" />
 		<property name="Cost" />
 		<bag name="Orders" table="OrdersToProducts">
-			<key column="Product_id"></key>
-			<many-to-many class="Order" column="Order_id"></many-to-many>
+			<key column="Product_id"/>
+			<many-to-many class="Order" column="Order_id"/>
 		</bag>
 		<property name="Version" />
 	</class>

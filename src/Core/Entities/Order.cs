@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SomeBasicNHApp.Core.Entities
 {
-    public class Order : IIdentifiableByNumber
+    public class Order
     {
         public virtual Customer Customer { get; set; }
 

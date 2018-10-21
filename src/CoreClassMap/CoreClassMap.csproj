@@ -4,11 +4,9 @@
     <DefineConstants>CLASSMAP</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Core\ClassMap.cs" Link="ClassMap.cs" />
     <Compile Include="..\Core\Entities\Customer.cs" Link="Entities\Customer.cs" />
     <Compile Include="..\Core\Entities\Order.cs" Link="Entities\Order.cs" />
     <Compile Include="..\Core\Entities\Product.cs" Link="Entities\Product.cs" />
-    <Compile Include="..\Core\IIdentifiableByNumber.cs" Link="IIdentifiableByNumber.cs" />
     <Compile Include="..\Core\IMapPath.cs" Link="IMapPath.cs" />
     <Compile Include="..\Core\Session.cs" Link="Session.cs" />
   </ItemGroup>

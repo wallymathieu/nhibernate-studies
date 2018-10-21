@@ -11,7 +11,6 @@
     <Compile Include="..\Core\Entities\Customer.cs" Link="Entities\Customer.cs" />
     <Compile Include="..\Core\Entities\Order.cs" Link="Entities\Order.cs" />
     <Compile Include="..\Core\Entities\Product.cs" Link="Entities\Product.cs" />
-    <Compile Include="..\Core\IIdentifiableByNumber.cs" Link="IIdentifiableByNumber.cs" />
     <Compile Include="..\Core\IMapPath.cs" Link="IMapPath.cs" />
     <None Include="nhibernate-configuration.xsd">
       <SubType>Designer</SubType>

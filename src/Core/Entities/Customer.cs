@@ -2,7 +2,7 @@
 
 namespace SomeBasicNHApp.Core.Entities
 {
-    public class Customer : IIdentifiableByNumber
+    public class Customer
     {
 
         public virtual int Id { get; set; }

@@ -9,7 +9,7 @@
 		<property name="Lastname" />
 		<property name="Version" />
 		<bag name="Orders" >
-			<key column="Customer_id"></key>
+			<key column="Customer_id"/>
 			<one-to-many class="Order" />
 		</bag>
 

@@ -7,10 +7,10 @@
 		</id>
 		<property name="OrderDate" />
 		<property name="Version" />
-		<many-to-one name="Customer" class="Customer" column="Customer_id"></many-to-one>
+		<many-to-one name="Customer" class="Customer" column="Customer_id"/>
 		<bag name="Products" table="OrdersToProducts">
-			<key column="Order_id"></key>
-			<many-to-many class="Product" column="Product_id"></many-to-many>
+			<key column="Order_id"/>
+			<many-to-many class="Product" column="Product_id"/>
 		</bag>
 	</class>
 </hibernate-mapping>
