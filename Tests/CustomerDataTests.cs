@@ -13,34 +13,21 @@ namespace SomeBasicNHApp.Tests
     public class CustomerDataTests:IDisposable
     {
 
-        private static ISessionFactory _sessionFactory;
+        private static readonly ISessionFactory _sessionFactory;
+        private readonly ISession _session;
 
-        private ISession _session;
-
-
-        [Fact]
-        public void CanGetCustomerById()
-        {
-            var customer = _session.Get<Customer>(1);
-
-            Assert.NotNull(customer);
-        }
 
         [Fact]
-        public void CustomerHasOrders()
-        {
-            var customer = _session.Get<Customer>(1);
-
-            Assert.True(customer.Orders.Any());
-        }
+        public void CanGetCustomerById() =>
+            Assert.NotNull(_session.Get<Customer>(1));
 
         [Fact]
-        public void ProductsArePartOfOrders()
-        {
-            var product = _session.Get<Product>(1);
+        public void CustomerHasOrders() =>
+            Assert.True(_session.Get<Customer>(1).Orders.Any());
 
-            Assert.True(product.Orders.Any());
-        }
+        [Fact]
+        public void ProductsArePartOfOrders() =>
+            Assert.True(_session.Get<Product>(1).Orders.Any());
 
         [Fact]
         public void CanGetCustomerByFirstname()
@@ -52,34 +39,24 @@ namespace SomeBasicNHApp.Tests
         }
 
         [Fact]
-        public void CanGetProductById()
-        {
-            var product = _session.Get<Product>(1);
+        public void CanGetProductById() =>
+            Assert.NotNull(_session.Get<Product>(1));
 
-            Assert.NotNull(product);
-        }
         [Fact]
-        public void OrderContainsProduct()
-        {
-            Assert.True(_session.Get<Order>(1).Products.Any(p => p.Id == 1));
-        }
+        public void OrderContainsProduct() =>
+            Assert.Contains(_session.Get<Order>(1).Products, p => p.Id == 1);
+
         [Fact]
-        public void OrderHasACustomer()
-        {
+        public void OrderHasACustomer() =>
             Assert.False(string.IsNullOrWhiteSpace( _session.Get<Order>(1).Customer.Firstname));
-        }
 
 
-        public CustomerDataTests()
-        {
+        public CustomerDataTests() =>
             _session = _sessionFactory.OpenSession();
-        }
 
 
-        public void Dispose()
-        {
+        public void Dispose() =>
             _session.Close();
-        }
 
         static CustomerDataTests()
         {
@@ -90,7 +67,7 @@ namespace SomeBasicNHApp.Tests
             var import = new XmlImport(doc, "http://tempuri.org/Database.xsd");
             using (var session = _sessionFactory.OpenSession())
             {
-                new Migrator("CustomerDataTests.db").Migrate(session.Connection);
+                new Migrator("CustomerDataTests.db").Migrate();
             }
             using (var session = _sessionFactory.OpenSession())
             using (var tnx = session.BeginTransaction())

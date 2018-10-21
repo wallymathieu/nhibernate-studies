@@ -1,31 +1,43 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Data;
-using FluentMigrator.Runner.Initialization;
-using FluentMigrator.Runner.Announcers;
+using FluentMigrator.Runner;
+using FluentMigrator.Runner.Processors;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace SomeBasicNHApp.Tests
 {
-
     public class Migrator
     {
-        private readonly ConsoleAnnouncer consoleAnnouncer = new ConsoleAnnouncer();
+        private static void RunWithServices(string processorId, string connectionString)
+        {
+            // Initialize the services
+            var serviceProvider = new ServiceCollection()
+                .AddLogging(lb => lb.AddDebug().AddFluentMigratorConsole())
+                .AddFluentMigratorCore()
+                .ConfigureRunner(
+                    builder => builder
+                        .AddSQLite()
+                        .WithGlobalConnectionString(connectionString)
+                        .ScanIn(typeof(DbMigrations.AddTables).Assembly).For.Migrations())
+                .Configure<SelectingProcessorAccessorOptions>(
+                    opt => opt.ProcessorId = processorId)
+                .BuildServiceProvider();
+
+            // Instantiate the runner
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+
+            // Run the migrations
+            runner.MigrateUp();
+        }
+    
 
         private readonly string _db;
         public Migrator(string db)
         {
             _db = db;
         }
-        public void Migrate(IDbConnection conn)
+        public void Migrate()
         {
-            var executor = new TaskExecutor(new RunnerContext(consoleAnnouncer)
-            {
-                Database = "sqlite",
-                Connection = "Data Source=" + _db + ";Version=3;",
-                Targets = new[] { "DbMigrations.dll" }
-            });
-            executor.Execute();
+            RunWithServices(connectionString: "Data Source=" + _db + ";Version=3;", processorId: "sqlite");
         }
     }
 

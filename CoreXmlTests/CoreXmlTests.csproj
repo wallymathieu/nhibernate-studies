@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CoreClassMap\CoreClassMap.csproj" />
+    <ProjectReference Include="..\CoreXml\CoreXml.csproj" />
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +20,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="FluentMigrator.Runner" Version="3.1.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />

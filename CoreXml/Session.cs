@@ -4,7 +4,7 @@ using System.Data.SQLite;
 
 namespace SomeBasicNHApp.Core
 {
-    class Session
+    public class Session
     {
         private readonly IMapPath _mapPath;
 
