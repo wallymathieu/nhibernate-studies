@@ -18,17 +18,6 @@ namespace SomeBasicNHApp.Core
 {
     public class Session
     {
-        private class CustomConf : DefaultAutomappingConfiguration
-        {
-            public override bool IsId(Member member)
-            {
-                return member.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase);
-            }
-            public override Type GetParentSideForManyToMany(Type left, Type right)
-            {
-                return base.GetParentSideForManyToMany(left, right);
-            }
-        }
         public class TableNameConvention : IClassConvention
         {
             public void Apply(FluentNHibernate.Conventions.Instances.IClassInstance instance)
