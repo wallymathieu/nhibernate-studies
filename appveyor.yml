@@ -6,5 +6,8 @@ build_script:
   - dotnet build nhibernate-studies.sln
 test_script:
   - dotnet test Tests
-  - dotnet test CoreXml
+  - dotnet test CoreXmlTests
   - dotnet test ClassMapTests
+branches:
+  only:
+    - master
