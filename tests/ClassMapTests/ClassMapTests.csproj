@@ -7,11 +7,6 @@
     <ProjectReference Include="..\..\src\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\Tests\CustomerDataTests.cs" Link="CustomerDataTests.cs" />
     <Compile Include="..\Tests\Migrator.cs" Link="Migrator.cs" />
     <Compile Include="..\Tests\XmlImport.cs" Link="XmlImport.cs" />
