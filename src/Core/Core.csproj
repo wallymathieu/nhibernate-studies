@@ -3,9 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>SomeBasicNHApp.Core</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup>
-    <RootNamespace>SomeBasicNHApp.Core</RootNamespace>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
     <PackageReference Include="NHibernate" Version="5.1.3" />

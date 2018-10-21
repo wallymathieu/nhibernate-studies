@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>CLASSMAP</DefineConstants>
+    <RootNamespace>SomeBasicNHApp.Core</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Core\Entities\Customer.cs" Link="Entities\Customer.cs" />

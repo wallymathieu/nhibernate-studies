@@ -14,6 +14,6 @@ namespace SomeBasicNHApp
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public string MapPath(string path) => Path.Combine(_hostingEnvironment.ContentRootPath, "..", path);
+        public string MapPath(string path) => Path.Combine(_hostingEnvironment.ContentRootPath, "..", "..", path);
     }
 }
