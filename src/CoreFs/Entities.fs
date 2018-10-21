@@ -1,11 +1,6 @@
 namespace SomeBasicNHApp.Core.Entities
 open System
 open System.Collections.Generic
-(*
-type Order = {mutable Id:int;mutable OrderDate:DateTime;mutable Customer:Customer;Products:List<Product>;mutable Version:int }
-and Customer= {mutable Id:int;mutable Firstname:string;mutable Lastname:string;Orders:List<Order>;mutable Version:int}
-and Product= {mutable Id:int;mutable Cost:float;mutable Name:string;Products: List<Product>;mutable Version:int}
-*)
 
 type [<AllowNullLiteral>] Order(id,orderDate,customer,version) =
     new()=Order(0,DateTime.MinValue,null,0)
