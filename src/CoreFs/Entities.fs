@@ -8,20 +8,7 @@ and Product= {mutable Id:int;mutable Cost:float;mutable Name:string;Products: Li
 *)
 
 type [<AllowNullLiteral>] Order(id,orderDate,customer,version) =
-    //let mutable id = id
-    //let mutable orderDate = orderDate
-    //let mutable customer = customer
-    //let mutable version = version
     new()=Order(0,DateTime.MinValue,null,0)
-    //default this.Id =id with get()=id and set v=id<-v
-    //default this.Version with get()=version and set v=version<-v
-    //default this.OrderDate with get()=orderDate and set v=orderDate<-v
-    (*member val Id =id with get, set
-    member val Version =version with get, set
-    member val OrderDate =orderDate with get, set
-    member val Customer : Customer=customer with get, set
-    member val Products =List<Product>() :> IList<_> with get, set *)
-    
     abstract Id : int with get, set
     default val Id =id with get, set
     
