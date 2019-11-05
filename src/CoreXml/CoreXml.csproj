@@ -4,8 +4,8 @@
     <RootNamespace>SomeBasicNHApp.CoreXml</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NHibernate" Version="5.1.3" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
+    <PackageReference Include="NHibernate" Version="$(NHibernateVersion)" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="$(SystemDataSQLiteCoreVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Core\Entities\Customer.cs" Link="Entities\Customer.cs" />

@@ -17,3 +17,7 @@ packages/
 TestResult.xml
 .idea/
 
+# VS Code
+.ionide/
+
+.tools/

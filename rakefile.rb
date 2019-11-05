@@ -1,4 +1,3 @@
-require 'albacore'
 require 'fileutils'
 require 'rexml/document'
 require 'nuget_helper'
@@ -18,7 +17,14 @@ namespace :migrations do
     ["--connection \"Data Source=#{File.join($pwd,".db.sqlite")};\"", 
      "--processor SQLite", "--assembly DbMigrations.dll"]
   end
-  
+  def dotnet_fm
+    File.join($pwd,".tools","dotnet-fm")
+  end
+  task :tool do
+    # note matches directory build props version FluentMigratorVersion:
+    system("dotnet tool install FluentMigrator.DotNet.Cli --version 3.2.1 --tool-path .tools")
+  end
+
   desc "Run migrations"
   task :run, [:version] do |t,args|
     #to migrate back, you can use "rake migrations:run[1]", where 1 is the desired version
@@ -29,7 +35,7 @@ namespace :migrations do
       params.push(" --version "+version)
     end
     cd File.join("DbMigrations","bin","Debug","netstandard2.0") do
-      system("dotnet-fm migrate #{params.join(" ")}")
+      system("#{dotnet_fm} migrate #{params.join(" ")}")
     end
   end
 
@@ -38,7 +44,7 @@ namespace :migrations do
     cd File.join("DbMigrations","bin","Debug","netstandard2.0") do
       params = sqlite
       params.push("--preview")
-      system("dotnet-fm migrate #{params.join(" ")}")
+      system("#{dotnet_fm} migrate #{params.join(" ")}")
     end
   end
 end
