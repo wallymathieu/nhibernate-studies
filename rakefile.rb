@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'rexml/document'
 require 'nuget_helper'
-
+require 'nokogiri'
 include FileUtils
 
 task :default => [:all]
@@ -21,8 +21,9 @@ namespace :migrations do
     File.join($pwd,".tools","dotnet-fm")
   end
   task :tool do
-    # note matches directory build props version FluentMigratorVersion:
-    system("dotnet tool install FluentMigrator.DotNet.Cli --version 3.2.1 --tool-path .tools")
+    props = Nokogiri::XML(File.read("Directory.Build.props"))
+    fluentmigrator_version = props.at_xpath("//FluentMigratorVersion").text
+    system("dotnet tool install FluentMigrator.DotNet.Cli --version #{fluentmigrator_version} --tool-path .tools")
   end
 
   desc "Run migrations"

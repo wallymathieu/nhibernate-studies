@@ -20,6 +20,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  nokogiri
   nuget_helper
   paket_bootstrapper
   rake
