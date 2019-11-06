@@ -1,9 +1,9 @@
-nhibernate-studies [![Build status](https://ci.appveyor.com/api/projects/status/iwadim1r79l0ucdc/branch/master?svg=true)](https://ci.appveyor.com/project/wallymathieu/nhibernate-studies/branch/master)
-==================
+# nhibernate-studies [![Build status](https://ci.appveyor.com/api/projects/status/iwadim1r79l0ucdc/branch/master?svg=true)](https://ci.appveyor.com/project/wallymathieu/nhibernate-studies/branch/master)
 
 Old code based on Summer Of NHibernate. The old code was a bit dated, so here is the updated version.
 
 ## Intro
+
 In order to help with self studies of NHibernate I've created this sample project. 
 
 The code is a heavily modified fork of the code from Summer Of NHibernate:

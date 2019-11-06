@@ -10,8 +10,7 @@
         <Compile Include="Session.fs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="FluentNHibernate" Version="2.1.2" />
-        <PackageReference Include="NHibernate" Version="5.1.3" />
-        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.109.2" />
-    </ItemGroup>
+        <PackageReference Include="FluentNHibernate" Version="$(FluentNHibernateVersion)" />
+        <PackageReference Include="NHibernate" Version="$(NHibernateVersion)" />
+        <PackageReference Include="System.Data.SQLite.Core" Version="$(SystemDataSQLiteCoreVersion)" />    </ItemGroup>
 </Project>
