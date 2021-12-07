@@ -24,23 +24,25 @@ namespace SomeBasicNHApp.Controllers
             return View(contexts.ToArray());
         }
 
-        public ActionResult Get(int id) => 
+        public ActionResult Get(int id) =>
             View(_session.Get<Customer>(id));
 
+        [ActionName("Create"), HttpGet]
         public ActionResult Create() => 
             View();
 
-        [ActionName("Create"), AcceptVerbs("POST")]
+        [ActionName("Create"), HttpPost]
         public ActionResult CreatePost([Bind("Firstname","Lastname")]Customer context)
         {
             _session.Save(context);
             return Redirect("/Customer");
         }
 
-        public IActionResult Edit([FromQuery]int id) => 
+        [ActionName("Edit"), HttpGet]
+        public IActionResult Edit([FromRoute]int id) =>
             View(_session.Get<Customer>(id));
         
-        [ActionName("Edit"), AcceptVerbs("POST")]
+        [ActionName("Edit"), HttpPost]
         public ActionResult EditPost([FromQuery]int id, CustomerEditModel model)
         {
             var customer = _session.Get<Customer>(id);

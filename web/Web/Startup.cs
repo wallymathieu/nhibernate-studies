@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NHibernate;
 using SomeBasicNHApp.Core;
@@ -11,9 +12,9 @@ namespace SomeBasicNHApp
 {
     public class Startup
     {
-        private IHostingEnvironment _env;
+        private IWebHostEnvironment _env;
 
-        public Startup(IHostingEnvironment env, IConfiguration configuration)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
             _env = env;
             Configuration = configuration;
@@ -30,31 +31,34 @@ namespace SomeBasicNHApp
             services.AddSingleton(ioc=> 
                 new Session(new WebMapPath(_env)).CreateWebSessionFactory());
             services.AddScoped(ioc => ioc.GetRequiredService<ISessionFactory>().OpenSession());
-            services.AddMvc();
+            services.AddControllersWithViews().AddApplicationPart(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
             }
             else
             {
+                app.UseHsts();
                 app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
 
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseRouting();
 
-            app.UseMvcWithDefaultRoute();
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

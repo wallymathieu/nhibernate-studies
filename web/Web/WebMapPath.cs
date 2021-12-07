@@ -7,9 +7,9 @@ namespace SomeBasicNHApp
 {
     public class WebMapPath : IMapPath
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public WebMapPath(IHostingEnvironment hostingEnvironment)
+        public WebMapPath(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }

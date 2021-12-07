@@ -1,5 +1,7 @@
-version: 1.0.{build}
+image: Visual Studio 2022
 configuration: Release
+install:
+  - cmd: choco install dotnetcore-sdk -y
 before_build:
   - dotnet restore nhibernate-studies.sln
 build_script:
