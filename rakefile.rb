@@ -1,7 +1,4 @@
 require 'fileutils'
-require 'rexml/document'
-require 'nuget_helper'
-require 'nokogiri'
 include FileUtils
 
 task :default => [:all]
