@@ -18,12 +18,7 @@ namespace :migrations do
      "--processor SQLite", "--assembly DbMigrations.dll"]
   end
   def dotnet_fm
-    File.join($pwd,".tools","dotnet-fm")
-  end
-  task :tool do
-    props = Nokogiri::XML(File.read("Directory.Build.props"))
-    fluentmigrator_version = props.at_xpath("//FluentMigratorVersion").text
-    system("dotnet tool install FluentMigrator.DotNet.Cli --version #{fluentmigrator_version} --tool-path .tools")
+    "dotnet tool run dotnet-fm"
   end
 
   desc "Run migrations"
@@ -35,14 +30,14 @@ namespace :migrations do
     if version
       params.push(" --version "+version)
     end
-    cd File.join("DbMigrations","bin","Debug","netstandard2.0") do
+    cd File.join("migrations","DbMigrations","bin","Debug","netstandard2.0") do
       system("#{dotnet_fm} migrate #{params.join(" ")}")
     end
   end
 
   desc "Dry run migrations"
   task :dryrun do |t,args|
-    cd File.join("DbMigrations","bin","Debug","netstandard2.0") do
+    cd File.join("migrations","DbMigrations","bin","Debug","netstandard2.0") do
       params = sqlite
       params.push("--preview")
       system("#{dotnet_fm} migrate #{params.join(" ")}")
