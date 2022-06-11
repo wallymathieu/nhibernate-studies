@@ -21,3 +21,5 @@ TestResult.xml
 .ionide/
 
 .tools/
+
+.DS_Store
