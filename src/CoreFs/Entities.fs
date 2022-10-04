@@ -7,7 +7,7 @@ type [<CLIMutable>] Order = {
     Version: int
     OrderDate: DateTime
     Customer: Customer
-    Products: List<Product>
+    Products: IList<Product>
 }
 with
     static member Create(id,version,orderDate,customer,products) = { Id = id; Version = version; OrderDate = orderDate; Customer = customer; Products =products }
