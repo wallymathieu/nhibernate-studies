@@ -1,12 +1,10 @@
 ﻿module Tests
 
-open System
 open Xunit
 open FSharp.Data
 open SomeBasicNHApp.Core
 open SomeBasicNHApp.Core.Entities
 open System.Collections.Generic
-open System.IO
 open System.IO
 open NHibernate
 
@@ -18,13 +16,16 @@ module TestData=
         use tnx = session.BeginTransaction()
 
         let toCustomer (o : TestData.Customer) =
-            Customer(id=o.Id,version=o.Version,firstname=o.Firstname,lastname=o.Lastname)
+            Customer.Create(id=o.Id, version = o.Version, firstname = o.Firstname, lastname = o.Lastname,
+                            orders = List<_>())
 
         let toOrder (o : TestData.Order)=
-            Order(id=o.Id,version=o.Version,customer=session.Get<Customer>(o.Customer),orderDate=o.OrderDate.DateTime)
+            Order.Create(id = o.Id, version = o.Version, customer = session.Get<Customer>(o.Customer), orderDate = o.OrderDate.DateTime,
+                         products = List<_>() )
 
         let toProduct (o : TestData.Product)=
-            Product(id=o.Id,version=o.Version,name=o.Name,cost=float o.Cost)
+            Product.Create(id=o.Id, version=o.Version, name=o.Name, cost=float o.Cost,
+                           products=List<_>())
 
         let toOrderProduct(o : TestData.OrderProduct)=
             let order=session.Get<Order>(o.Order)
@@ -41,7 +42,7 @@ module TestData=
             session.Save order |> ignore
         for product in db.Products |> Array.map toProduct do
             session.Save product |> ignore
-        for (order,product) in db.OrderProducts |> Array.map toOrderProduct do
+        for order,product in db.OrderProducts |> Array.map toOrderProduct do
             order.Products.Add product
         tnx.Commit()
 
