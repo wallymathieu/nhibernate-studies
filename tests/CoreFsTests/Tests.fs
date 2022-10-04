@@ -21,7 +21,7 @@ module TestData=
             Customer(id=o.Id,version=o.Version,firstname=o.Firstname,lastname=o.Lastname)
 
         let toOrder (o : TestData.Order)=
-            Order(id=o.Id,version=o.Version,customer=session.Get<Customer>(o.Customer),orderDate=o.OrderDate.DateTime)
+            Order.Create(id=o.Id, version=o.Version, customer=session.Get<Customer>(o.Customer), orderDate=o.OrderDate.DateTime, products= List<_>() )
 
         let toProduct (o : TestData.Product)=
             Product(id=o.Id,version=o.Version,name=o.Name,cost=float o.Cost)

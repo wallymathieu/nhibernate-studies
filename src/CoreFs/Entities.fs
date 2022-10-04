@@ -2,18 +2,15 @@ namespace SomeBasicNHApp.Core.Entities
 open System
 open System.Collections.Generic
 
-type [<AllowNullLiteral>] Order(id,orderDate,customer,version) =
-    new()=Order(0,DateTime.MinValue,null,0)
-    member val Id =id with get, set
-    
-    member val Version =version with get, set
-    
-    member val OrderDate =orderDate with get, set
-    
-    member val Customer : Customer=customer with get, set
-    
-    member val Products =List<Product>() :> IList<_> with get, set
-
+type [<CLIMutable>] Order = {
+    Id: int
+    Version: int
+    OrderDate: DateTime
+    Customer: Customer
+    Products: List<Product>
+}
+with
+    static member Create(id,version,orderDate,customer,products) = { Id = id; Version = version; OrderDate = orderDate; Customer = customer; Products =products }
 and [<AllowNullLiteral>] Customer(id,firstname,lastname,version)=
     new()=Customer(0,"","",0)
     member val Id =id with get, set
