@@ -1,12 +1,10 @@
 ﻿module Tests
 
-open System
 open Xunit
 open FSharp.Data
 open SomeBasicNHApp.Core
 open SomeBasicNHApp.Core.Entities
 open System.Collections.Generic
-open System.IO
 open System.IO
 open NHibernate
 
@@ -44,7 +42,7 @@ module TestData=
             session.Save order |> ignore
         for product in db.Products |> Array.map toProduct do
             session.Save product |> ignore
-        for (order,product) in db.OrderProducts |> Array.map toOrderProduct do
+        for order,product in db.OrderProducts |> Array.map toOrderProduct do
             order.Products.Add product
         tnx.Commit()
 
