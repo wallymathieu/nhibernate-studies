@@ -4,20 +4,15 @@ open System.Collections.Generic
 
 type [<AllowNullLiteral>] Order(id,orderDate,customer,version) =
     new()=Order(0,DateTime.MinValue,null,0)
-    abstract Id : int with get, set
-    default val Id =id with get, set
+    member val Id =id with get, set
     
-    abstract Version : int with get, set
-    default val Version =version with get, set
+    member val Version =version with get, set
     
-    abstract OrderDate : DateTime with get, set
-    default val OrderDate =orderDate with get, set
+    member val OrderDate =orderDate with get, set
     
-    abstract Customer : Customer with get, set
-    default val Customer : Customer=customer with get, set
+    member val Customer : Customer=customer with get, set
     
-    abstract Products : IList<Product> with get, set
-    default val Products =List<Product>() :> IList<_> with get, set
+    member val Products =List<Product>() :> IList<_> with get, set
 
 and [<AllowNullLiteral>] Customer(id,firstname,lastname,version)=
     new()=Customer(0,"","",0)
