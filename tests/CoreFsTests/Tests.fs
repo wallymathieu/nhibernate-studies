@@ -18,13 +18,16 @@ module TestData=
         use tnx = session.BeginTransaction()
 
         let toCustomer (o : TestData.Customer) =
-            Customer(id=o.Id,version=o.Version,firstname=o.Firstname,lastname=o.Lastname)
+            Customer.Create(id=o.Id, version = o.Version, firstname = o.Firstname, lastname = o.Lastname,
+                            orders = List<_>())
 
         let toOrder (o : TestData.Order)=
-            Order.Create(id=o.Id, version=o.Version, customer=session.Get<Customer>(o.Customer), orderDate=o.OrderDate.DateTime, products= List<_>() )
+            Order.Create(id = o.Id, version = o.Version, customer = session.Get<Customer>(o.Customer), orderDate = o.OrderDate.DateTime,
+                         products = List<_>() )
 
         let toProduct (o : TestData.Product)=
-            Product(id=o.Id,version=o.Version,name=o.Name,cost=float o.Cost)
+            Product.Create(id=o.Id, version=o.Version, name=o.Name, cost=float o.Cost,
+                           products=List<_>())
 
         let toOrderProduct(o : TestData.OrderProduct)=
             let order=session.Get<Order>(o.Order)
