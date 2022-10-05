@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <FluentMigratorVersion>3.3.1</FluentMigratorVersion>
+    <FluentMigratorVersion>3.3.2</FluentMigratorVersion>
     <FluentNHibernateVersion>3.1.0</FluentNHibernateVersion>
-    <NHibernateVersion>5.3.10</NHibernateVersion>
-    <SystemDataSQLiteCoreVersion>1.0.112</SystemDataSQLiteCoreVersion>
+    <NHibernateVersion>5.3.13</NHibernateVersion>
+    <SystemDataSQLiteCoreVersion>1.0.116</SystemDataSQLiteCoreVersion>
   </PropertyGroup>
 </Project>
 
